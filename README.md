@@ -1,7 +1,7 @@
 ## Full-Stack Web App (Project 2)
 
 ## Description
-A large full-stack Auto-Maintenance web application 
+A large full-stack Auto-Maintenance web application called CarLogix
 
 ## Members
 - James Bowen
@@ -15,3 +15,4 @@ A large full-stack Auto-Maintenance web application
 1. Clone the repository:
    ```bash
    git clone <repository-link>
+
