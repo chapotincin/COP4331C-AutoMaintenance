@@ -3,7 +3,7 @@ function HomeHeader()
     return(
         <header>
             <h1 id="title">CarLogix 
-                <a href="HomePage.tsx">Home</a> <a href="TeamPage.tsx">Team</a> <a href="LoginPage.tsx">Log In</a>
+                <a href="/">Home</a> <a href="/team">Team</a> <a href="/login">Log In</a>
             </h1>
         </header>
     );

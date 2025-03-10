@@ -1,0 +1,13 @@
+#full-page {
+    display: flex;
+    flex-direction: row;
+}
+
+body {
+    overflow: hidden;
+}
+
+html,body {
+    margin: 0;
+    padding: 0;
+}

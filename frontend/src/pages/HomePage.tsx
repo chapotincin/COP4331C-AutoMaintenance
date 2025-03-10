@@ -10,7 +10,7 @@ const HomePage = () =>
             <h2>Your Car's Health Simplified</h2>
             <p id="companyDescription">CarLogix takes the guesswork out of car maintenance. Simply enter your VIN and mileage, 
                 and we'll track your vehicle's needs, sending timely reminders so you know your car’s needs.</p>
-            <a href="RegisterPage.tsx">Get Started for Free</a>
+            <a href="/register">Get Started for Free</a>
 
             <h2>Manage Your Vehicles Maintenance in a Single System</h2>
             <p>What does CarLogix offer?</p>
