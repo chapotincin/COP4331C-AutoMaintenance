@@ -1,0 +1,6 @@
+.side-picture {
+    width: 62vw;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+}
