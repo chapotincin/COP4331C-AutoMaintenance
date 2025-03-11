@@ -1,4 +1,4 @@
-import HomeHeader from '../components/HomeHeader.tsx';
+import HomeHeader from '../components/HomeHeader/HomeHeader.tsx';
 import HomeFooter from '../components/HomeFooter.tsx';
 
 const CarPage = () =>

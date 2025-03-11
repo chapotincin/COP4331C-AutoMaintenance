@@ -7,6 +7,14 @@ function LoginComp()
     const [loginEmail,setLoginEmail] = React.useState('');
     const [loginPassword,setLoginPassword] = React.useState('');
 
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginEmail(e.target.value);
+    };
+    
+      const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginPassword(e.target.value);
+    };
+
     async function doLogin(event:any) : Promise<void>
     {
         event.preventDefault();
@@ -28,7 +36,7 @@ function LoginComp()
                 {firstName:res.firstName,lastName:res.lastName,email:res.email,id:res.id}
                     localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
-                window.location.href = '/';
+                window.location.href = '/carpage';
             }
         }
         catch(error:any)
@@ -40,9 +48,9 @@ function LoginComp()
     return(
         <div id="login-div">
             <label>Email</label>
-            <input type="text" id="emailRegister" placeholder="Email" />
+            <input type="text" id="email" placeholder="Email" value={loginEmail} onChange={handleEmailChange}/>
             <label>Password</label>
-            <input type="password" id="passwordRegister" placeholder="Password" />
+            <input type="password" id="password" placeholder="Password" value={loginPassword} onChange={handlePasswordChange}/>
             <button id="loginButton" className="buttons" onClick={doLogin}>Login</button>
             <label>New User? </label>
             <a href = "/register">Create An Account</a>
