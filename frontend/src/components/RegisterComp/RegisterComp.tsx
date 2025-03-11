@@ -1,12 +1,7 @@
-import React from "react";
 import './RegisterComp.css'
 
 function RegisterComp()
 {
-    async function doRegister(event:any) : Promise<void>
-    {
-        
-    };
     return(
         <div id = "register-div">
             <label>Email</label>
@@ -29,7 +24,7 @@ function RegisterComp()
             <label>Repeat Password</label>
             <input type="password" id="passwordRepeatRegister" placeholder="Repeat Password" />
             
-            <button id="registerButton" className="buttons" onClick={doRegister}>Register</button>
+            <button id="registerButton" className="buttons" >Register</button>
             <label>Already have an account? </label>
             <a href = "/login">Log In</a>
         </div>
