@@ -5,7 +5,8 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  verified: { type: Boolean, default: false } // Track if the user verified their email
 });
 
 module.exports = mongoose.model("User", UserSchema);
