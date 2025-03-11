@@ -6,7 +6,7 @@ app.use(express.json());
 
 app.post("/update", (req, res) => {
     console.log("Webhook received!");
-    exec("bash /root/car-project/update.sh", (error, stdout, stderr) => {
+    exec("bash /var/www/html/update.sh", (error, stdout, stderr) => {
         if (error) {
             console.error(`Error: ${error.message}`);
             return res.status(500).send("Error executing script.");
