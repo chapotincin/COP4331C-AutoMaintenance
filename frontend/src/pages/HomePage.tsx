@@ -14,7 +14,7 @@ const HomePage = () =>
 
             <h2>Manage Your Vehicles Maintenance in a Single System</h2>
             <p>What does CarLogix offer?</p>
-            <p>THIS IS A TEST</p>
+            <p>THIS IS A TEST!!!!!</p>
             <div id="offers">VIN Lookup  Mileage Tracking  Maintenance Schedules  Personalized Reminders</div>
 
             <HomeFooter />
