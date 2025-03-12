@@ -1,4 +1,5 @@
 name: CI/CD Frontend Pipeline
+
 on:
   push:
     branches:
@@ -6,33 +7,39 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 22.13.1
-    - name: Install dependencies
-      run: npm install
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22.13.1
+
+      - name: Install dependencies
+        run: npm install
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
-      - name: Deploy to DigitalOcean Droplet
-        env:
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+
+      - name: Setup SSH Key
         run: |
-          sshpass -p "${PRIVATE_KEY}" ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} << 'EOF'
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to DigitalOcean Droplet
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd /var/www/html
           git pull origin main
           cd /var/www/html/frontend
