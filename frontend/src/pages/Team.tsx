@@ -5,7 +5,6 @@ const TeamPage = () =>
 {
     return(
         <div>
-            <HomeHeader />
 
             <h2>Team page</h2>
             

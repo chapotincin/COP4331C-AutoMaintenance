@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import "./LoginComp.css"
+import React,{useState} from "react";
 
 function LoginComp()
 {

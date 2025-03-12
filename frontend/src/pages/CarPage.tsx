@@ -5,7 +5,6 @@ const CarPage = () =>
 {
     return(
         <div>
-            <HomeHeader />
 
             <h2>Car page</h2>
             
