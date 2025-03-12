@@ -34,7 +34,7 @@ jobs:
         run: |
           sshpass -p "${PRIVATE_KEY}" ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} << 'EOF'
           cd /var/www/html
-          git pull orgin main
+          git pull origin main
           cd /var/www/html/frontend
           npm install
           npm run build
