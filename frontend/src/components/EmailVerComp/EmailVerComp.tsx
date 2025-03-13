@@ -37,10 +37,21 @@ function EmailVerComp()
                         firstName,
                         lastName
                     })});
-            if(response.ok)
+            
+            if (!response.ok) {
+                setMessage('Server error. Please try again.');
+            }
+
+            const res = await response.json();
+
+            if(res.success)
             {
                 setMessage('');
                 window.location.href = '/login';
+            }
+            else
+            {
+                setMessage('Error registering.');
             }
         }
         catch

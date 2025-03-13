@@ -36,7 +36,6 @@ function LoginComp() {
                 localStorage.setItem('user_data', JSON.stringify(res));
                 setMessage('');
                 window.location.href = '/carpage';
-                setMessage('Email/Password combination incorrect');
             } else {
                 setMessage('Email/Password combination incorrect');
             }
