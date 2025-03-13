@@ -54,7 +54,7 @@ function RegisterComp()
                 setMessage(data.message || 'Something went wrong');
               }
         }
-        catch (error)
+        catch
         {
             setMessage('Error registering, try again.')
         }
