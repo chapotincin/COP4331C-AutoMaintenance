@@ -28,17 +28,17 @@ function LoginComp() {
 
             if (!response.ok) {
                 setMessage('Server error. Please try again.');
-                return;
             }
 
             const res = await response.json();
 
-            if (!res.userID) {
-                setMessage('Email/Password combination incorrect');
-            } else {
+            if (res.success) {
                 localStorage.setItem('user_data', JSON.stringify(res));
                 setMessage('');
                 window.location.href = '/carpage';
+                setMessage('Email/Password combination incorrect');
+            } else {
+                setMessage('Email/Password combination incorrect');
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
