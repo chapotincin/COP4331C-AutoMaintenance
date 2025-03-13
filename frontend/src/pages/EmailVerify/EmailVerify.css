@@ -1,25 +1,24 @@
-#full-page {
+#email-verify-page {
     display: flex;
     flex-direction: row;
+    height: 100vh; 
 }
 
 #verify-field {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+}
+
+#logo {
+    margin-left: 150px;
 }
 
 body {
     overflow: hidden;
 }
 
-html,body {
+html, body {
     margin: 0;
     padding: 0;
-}
-
-#logo {
-    
-    margin-left: 150px;
 }

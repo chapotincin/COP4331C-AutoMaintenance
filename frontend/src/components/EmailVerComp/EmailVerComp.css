@@ -1,4 +1,4 @@
-#login-div {
+#verify-field {
     width: 50%;
     max-width: 400px;
     margin: auto; 
@@ -6,6 +6,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+#first-last {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+#first-last div {
+    display: flex;
+    flex-direction: column;
 }
 
 label {

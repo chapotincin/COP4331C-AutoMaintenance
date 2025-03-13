@@ -5,6 +5,7 @@ import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
 import CarPage from './pages/CarPage';
 import TeamPage from './pages/Team';
+import EmailVerify from './pages/EmailVerify/EmailVerify';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path ="/carpage" element={<CarPage />} />
           <Route path ="/team" element={<TeamPage />} />
+          <Route path ="/emailverify" element={<EmailVerify />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,6 +7,11 @@ body {
     overflow: hidden;
 }
 
+.register-field {
+    flex: auto;
+    flex-direction: column;
+}
+
 html,body {
     margin: 0;
     padding: 0;
