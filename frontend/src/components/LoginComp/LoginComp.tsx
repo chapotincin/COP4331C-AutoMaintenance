@@ -33,7 +33,7 @@ function LoginComp() {
 
             const res = await response.json();
 
-            if (!res.id) {
+            if (!res.userID) {
                 setMessage('Email/Password combination incorrect');
             } else {
                 localStorage.setItem('user_data', JSON.stringify(res));
