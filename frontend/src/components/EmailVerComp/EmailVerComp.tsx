@@ -9,7 +9,7 @@ function EmailVerComp()
         firstName: '',
         lastName: '',
         password: '',
-        emailCode: ''
+        code: ''
     });
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +20,8 @@ function EmailVerComp()
     async function doVerify(event: React.FormEvent) : Promise<void>
     {
         event.preventDefault();
-        const {email, firstName, lastName, password, emailCode} = formData;
-        if (!email || !firstName || !lastName || !password || !emailCode) 
+        const {email, firstName, lastName, password, code} = formData;
+        if (!email || !firstName || !lastName || !password || !code) 
         {
             setMessage('All fields are required');
             return;
@@ -32,7 +32,7 @@ function EmailVerComp()
                 {method:'POST',headers:{'Content-Type' :
                     'application/json'},body: JSON.stringify({
                         email,
-                        emailCode,
+                        code,
                         password,
                         firstName,
                         lastName
@@ -80,7 +80,7 @@ function EmailVerComp()
             <input type="password" id="password" placeholder="Password" value={formData.password} onChange={handleInputChange}/>
             
             <label>Email Code</label>
-            <input type="text" id="emailCode" placeholder="Code" value={formData.emailCode} onChange={handleInputChange}/>
+            <input type="text" id="emailCode" placeholder="Code" value={formData.code} onChange={handleInputChange}/>
             
             <button id="verifyButton" className="buttons" onClick={doVerify}>Verify</button>
             {message && <p>{message}</p>}
