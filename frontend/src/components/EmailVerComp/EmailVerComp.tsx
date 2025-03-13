@@ -80,7 +80,7 @@ function EmailVerComp()
             <input type="password" id="password" placeholder="Password" value={formData.password} onChange={handleInputChange}/>
             
             <label>Email Code</label>
-            <input type="text" id="emailCode" placeholder="Code" value={formData.code} onChange={handleInputChange}/>
+            <input type="text" id="code" placeholder="Code" value={formData.code} onChange={handleInputChange}/>
             
             <button id="verifyButton" className="buttons" onClick={doVerify}>Verify</button>
             {message && <p>{message}</p>}
