@@ -52,6 +52,7 @@ function LoginComp()
             <label>Password</label>
             <input type="password" id="password" placeholder="Password" value={loginPassword} onChange={handlePasswordChange}/>
             <button id="loginButton" className="buttons" onClick={doLogin}>Login</button>
+            {message && <p style={{ color: "red" }}>{message}</p>} {/* Display error message */}
             <label>New User? </label>
             <a href = "/register">Create An Account</a>
         </div>
