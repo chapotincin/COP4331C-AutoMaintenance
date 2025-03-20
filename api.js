@@ -8,6 +8,8 @@ const crypto = require("crypto");
 const sendVerificationEmail = require("./sendEmail");
 const router = express.Router();
 
+const Car = require("./models/car.js"); // Import Car model
+
 // Temporary storage for verification codes (Use DB in production)
 const verificationCodes = new Map();
 
@@ -163,6 +165,67 @@ module.exports.setApp = function (app) {
         } else {
             console.error(`Invalid code for ${email}`);
             return res.status(400).json({ error: "Invalid verification code" });
+        }
+    });
+
+    /**
+     * 🏎️ Add a New Car for a User
+     */
+    app.post("/api/cars", async (req, res) => {
+        const { userId, vin, make, model, year, color, startingMileage, totalMileage, rateOfChange } = req.body;
+
+        if (!userId || !vin || !make || !model || !year || !color || !startingMileage || !totalMileage) {
+            return res.status(400).json({ error: "All fields except rateOfChange are required" });
+        }
+
+        try {
+            const newCar = new Car({ userId, vin, make, model, year, color, startingMileage, totalMileage, rateOfChange });
+            await newCar.save();
+            res.status(201).json({ success: true, message: "Car added successfully!", car: newCar });
+        } catch (error) {
+            res.status(500).json({ error: "Server error", details: error.message });
+        }
+    });
+
+    /**
+     * 🚗 Get All Cars for a Specific User
+     */
+    app.get("/api/cars/:userId", async (req, res) => {
+        try {
+            const cars = await Car.find({ userId: req.params.userId });
+            res.json({ success: true, cars });
+        } catch (error) {
+            res.status(500).json({ error: "Server error", details: error.message });
+        }
+    });
+
+    /**
+     * 🔄 Update Car Details
+     */
+    app.put("/api/cars/:carId", async (req, res) => {
+        try {
+            const updatedCar = await Car.findByIdAndUpdate(req.params.carId, req.body, { new: true });
+            if (!updatedCar) {
+                return res.status(404).json({ error: "Car not found" });
+            }
+            res.json({ success: true, message: "Car updated successfully!", car: updatedCar });
+        } catch (error) {
+            res.status(500).json({ error: "Server error", details: error.message });
+        }
+    });
+
+    /**
+     * 🗑️ Delete a Car
+     */
+    app.delete("/api/cars/:carId", async (req, res) => {
+        try {
+            const deletedCar = await Car.findByIdAndDelete(req.params.carId);
+            if (!deletedCar) {
+                return res.status(404).json({ error: "Car not found" });
+            }
+            res.json({ success: true, message: "Car deleted successfully!" });
+        } catch (error) {
+            res.status(500).json({ error: "Server error", details: error.message });
         }
     });
         
