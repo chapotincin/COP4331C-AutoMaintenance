@@ -10,6 +10,8 @@ const router = express.Router();
 
 const Car = require("./models/car.js"); // Import Car model
 
+const axios = require("axios"); // Make sure this is installed (npm install axios)
+
 // Temporary storage for verification codes (Use DB in production)
 const verificationCodes = new Map();
 
@@ -226,6 +228,54 @@ module.exports.setApp = function (app) {
             res.json({ success: true, message: "Car deleted successfully!" });
         } catch (error) {
             res.status(500).json({ error: "Server error", details: error.message });
+        }
+    });
+
+    /*
+       🚗 When Vin number is used to add a User's
+    */
+    app.post("/api/decode-vin", async (req, res) => {
+        const { userId, vin, color, startingMileage, rateOfChange } = req.body;
+    
+        if (!userId || !vin || !color || !startingMileage || !rateOfChange) {
+            return res.status(400).json({ error: "All fields are required." });
+        }
+    
+        try {
+            const response = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`);
+            const results = response.data.Results;
+    
+            const make = results.find(r => r.Variable === "Make")?.Value;
+            const model = results.find(r => r.Variable === "Model")?.Value;
+            const year = results.find(r => r.Variable === "Model Year")?.Value;
+    
+            if (!make || !model || !year) {
+                return res.status(400).json({ error: "Invalid VIN or missing vehicle data." });
+            }
+    
+            const newCar = new Car({
+                userId,
+                vin,
+                make,
+                model,
+                year,
+                color,
+                startingMileage,
+                totalMileage: startingMileage,
+                rateOfChange
+            });
+    
+            await newCar.save();
+    
+            res.status(201).json({ success: true, message: "Car decoded and saved successfully!", car: newCar });
+    
+        } catch (error) {
+            console.error("VIN decode error:", error.message);
+            if (error.code === 11000 && error.keyPattern?.vin) {
+                return res.status(400).json({ error: "A car with this VIN already exists." });
+            }
+            res.status(500).json({ error: "Server error", details: error.message });
+            
         }
     });
         
