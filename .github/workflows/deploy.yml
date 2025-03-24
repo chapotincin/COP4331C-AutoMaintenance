@@ -32,7 +32,7 @@ jobs:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           SERVER_USER : ${{secrets.SERVER_USER}}
         run: |
-          sshpass -p "${PRIVATE_KEY}" ssh -t ${SERVER_USER}@${SERVER_IP} << 'EOF'
+          sshpass -p "${PRIVATE_KEY}" ssh -tt ${SERVER_USER}@${SERVER_IP} << 'EOF'
           cd /var/www/html
           git pull origin main
           cd /var/www/html/frontend
