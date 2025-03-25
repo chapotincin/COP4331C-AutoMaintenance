@@ -1,14 +1,34 @@
-#header{
+#header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
     padding: 10px 20px;
 }
 
-.buttons{
-    width: 80px;
+#header .buttons-container {
+    display: flex;          
+    gap: 10px;            
+    margin-left: auto;     
+}
+
+.buttons {
+    width: 60px;
     height: 40px;
     padding: 10px;
     margin-left: 10px;
     border-radius: 10px;
+    background-color: white;
+    color: black;
+    
+}
+
+.buttons:hover{
+    background-color: rgb(167, 167, 167);
+}
+
+#loginButton {
+    width: 100px;
+    border: 5px solid;
+    border-color: brown;
+    border-radius: 10px;     
 }
