@@ -24,7 +24,20 @@ module.exports.setApp = function (app) {
         if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({ error: "All fields are required" });
         }
-    
+
+        
+        // ✅ Add this block for password complexity
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                error:
+                    "Password must be at least 8 characters long and include one lowercase letter, one uppercase letter, one number, and one special character."
+            });
+        } 
+        
+
+
         try {
             // Check if the user already exists
             let existingUser = await User.findOne({ email });
