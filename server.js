@@ -15,6 +15,9 @@ app.use(cors());
 const api = require("./api.js");
 api.setApp(app);
 
+// ⏱️ Start mileage updater script
+require("./mileageUpdater");
+
 // Start server
 app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}`);

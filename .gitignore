@@ -1,3 +1,4 @@
 node_modules/
 .env
 testCarSchema.js
+mileage-update-log.txt
