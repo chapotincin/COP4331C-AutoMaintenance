@@ -1,25 +1,30 @@
-const sgMail = require("@sendgrid/mail");
-require("dotenv").config();
+const { Resend } = require('resend');
+require('dotenv').config();
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendVerificationEmail = async (to, verificationCode) => {
-    const msg = {
-        to,
-        from: process.env.SENDER_EMAIL, // Must be a verified sender
-        subject: "Verify Your Email",
-        text: `Your verification code is: ${verificationCode}`,
-        html: `<strong>Your verification code is: ${verificationCode}</strong>`,
-    };
-
     try {
-        await sgMail.send(msg);
-        console.log("Verification email sent!");
+        const data = await resend.emails.send({
+            from: process.env.FROM_EMAIL,
+            to,
+            subject: "Verify Your Email",
+            text: `Your verification code is: ${verificationCode}`,
+            html: `<strong>Your verification code is: ${verificationCode}</strong>`,
+        });
+
+        console.log("Resend response:", data);
         return true;
+
     } catch (error) {
-        console.error("Error sending email:", error.response ? error.response.body : error);
+        console.error("Error sending email via Resend:");
+        console.error("Message:", error.message);
+        console.error("Stack:", error.stack);
+        console.error("Full Error:", error);
         return false;
     }
 };
 
 module.exports = sendVerificationEmail;
+
+
