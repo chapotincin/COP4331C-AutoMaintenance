@@ -1,4 +1,8 @@
 node_modules/
 .env
 testCarSchema.js
+<<<<<<< HEAD
 mileage-update-log.txt
+=======
+mileage-update-log.txt
+>>>>>>> 90d7c5c (Ignore mileage-update-log.txt from version control)
