@@ -183,6 +183,74 @@ module.exports.setApp = function (app) {
         }
     });
 
+    //API for forgotten passoword
+
+    app.post("/api/forgot-password", async (req, res) => { 
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: "Email is required" });
+        }
+        try{
+            const user = await User.findOne({email});
+            if (!user) {
+                return res.status(400).json({ error: "User not found" });
+            }
+
+            // Generate reset token
+            const resetToken = crypto.randomBytes(32).toString('hex');
+            user.resetToken = resetToken;
+            user.resetTokenExpires = Date.now() + 3600000; // 1 hour expiration
+            await user.save();
+
+            // Send email with reset link
+            const resetUrl = `http://localhost:3000/reset-password/${resetToken}`; //change url
+            await transporter.sendMail({
+                to: user.email,
+                subject: 'Password Reset Request',
+                text: `Click on the link to reset your password: ${resetUrl}`,
+        })
+
+        } catch (error) {
+            res.status(500).json({ error: "Server error" });
+        }
+     });
+
+     app.post("/api/reset-password", async (req, res) => {
+
+        try {
+            const { token } = req.params;
+            const { newPassword } = req.body;
+    
+            const user = await User.findOne({ 
+                resetToken: token, 
+                resetTokenExpires: { $gt: Date.now() } // Check if token is still valid
+            });
+    
+            if (!user) {
+                return res.status(400).json({ message: 'Invalid or expired token' });
+            }
+    
+            // Hash the new password
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            user.password = hashedPassword;
+    
+            // Clear the reset token fields
+            user.resetToken = undefined;
+            user.resetTokenExpires = undefined;
+            
+            await user.save();
+    
+            res.json({ message: 'Password reset successful' });
+        } catch (error) {
+            console.error('Error resetting password:', error);
+            res.status(500).json({ message: 'Server error' });
+        }
+     }
+
+
+    );
+
+
     /**
      * 🏎️ Add a New Car for a User
      */
