@@ -1,4 +1,4 @@
-import "./LoginComp.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 
 function LoginComp() {
@@ -49,32 +49,46 @@ function LoginComp() {
     }
 
     return (
-        <form onSubmit={doLogin} id="login-div">
-            <label>Email</label>
-            <input
-                type="text"
-                placeholder="Email"
-                value={loginEmail}
-                onChange={handleEmailChange}
-                required
-            />
+       <div className="container">
+            <form className="p-2 mx-auto" style={{ maxWidth: '400px' }} onSubmit={doLogin}>
+                <h2 className="text mb-2">Please Log In</h2>
 
-            <label>Password</label>
-            <input
-                type="password"
-                placeholder="Password"
-                value={loginPassword}
-                onChange={handlePasswordChange}
-                required
-            />
+                {message && <div className="alert alert-danger">{message}</div>}
 
-            <button type="submit" className="buttons">Login</button>
+                <div className="mb-3">
+                    <label htmlFor="text" className="form-label">Email</label>
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        value={loginEmail}
+                        onChange={handleEmailChange}
+                        className="form-control"
+                        required
+                    />
+                </div>
 
-            {message && <p style={{ color: "red" }}>{message}</p>}
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={loginPassword}
+                        onChange={handlePasswordChange}
+                        className="form-control"
+                        required
+                    />
+                </div>
 
-            <label>New User? </label>
-            <a href="/register">Create An Account</a>
-        </form>
+                <div className="d-grid">
+                    <button type="submit" className="btn btn-primary">Log In</button>
+                </div>
+
+                <div className="text-center mt-3">
+                    <label>New User? </label>
+                    <a href="/register" className="text-decoration-none"> Create An Account</a>
+                </div>
+            </form>
+       </div>
     );
 }
 

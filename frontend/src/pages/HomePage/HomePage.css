@@ -6,6 +6,11 @@ html, body {
     min-height: 100%; /* Ensures it fills the viewport at a minimum */
 }
 
+body.frontpage {
+    background-image: url('../../components/Images/Background.png');
+    background-size: 100%;
+}
+
 #page {
     padding: 20px;
 }

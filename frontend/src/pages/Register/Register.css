@@ -7,12 +7,25 @@ body {
     overflow: hidden;
 }
 
-.register-field {
-    flex: auto;
+#register-field {
+    flex: 1; 
+    display: flex; 
     flex-direction: column;
+    align-items: center;    
+    padding: 20px;
 }
 
-html,body {
+#logo {
+    padding-right: 10vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    height: auto; 
 }

@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import './EmailVerComp.css'
 
 function EmailVerComp()
 {
@@ -61,6 +60,7 @@ function EmailVerComp()
             
     }
     return(
+        /*
         <div id='verify-field'>
             <label>Email</label>
             <input type="text" id="email" placeholder="Email" value={formData.email} onChange={handleInputChange}/>
@@ -87,7 +87,85 @@ function EmailVerComp()
             <label>Already have an account? </label>
             <a href = "/login">Log In</a>
         </div>
-    )
+        */
+        <div className="container mt-4">
+            <form className="p-2 mx-auto" style={{ maxWidth: '400px' }} onSubmit={doVerify}>
+                <h2 className="text">Verify Email</h2>
+                {message && <div className="alert alert-danger">{message}</div>}
+
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Email</label>
+                    <input
+                        type="text"
+                        id="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="row mb-3">
+                    <div className="col-md-6">
+                        <label htmlFor="password" className="form-label">First Name</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleInputChange}
+                            className="form-control"
+                        />
+                    </div>
+
+                    <div className="col-md-6">
+                        <label htmlFor="password" className="form-label">Last Name</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
+                            onChange={handleInputChange}
+                            className="form-control"
+                        />
+                    </div>
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Code </label>
+                    <input
+                        type="text"
+                        id="code"
+                        placeholder="Code"
+                        value={formData.code}
+                        onChange={handleInputChange}
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="d-grid">
+                    <button type="submit" className="btn btn-primary">Verify</button>
+                </div>
+
+                <div className="text-center mt-3">
+                    <label>Already Have an Account? </label>
+                    <a href="/login" className="text-decoration-none"> Log in</a>
+                </div>
+            </form>
+        </div>
+    );
 }
 
 export default EmailVerComp;

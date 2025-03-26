@@ -1,4 +1,5 @@
-import './HomePage.css'; // Ensure CSS file is linked
+import './HomePage.css'; 
+import { useLocation } from 'react-router-dom';
 import HomeHeader from '../../components/HomeHeader/HomeHeader.tsx';
 import HomeOffer from '../../components/HomeOffer/HomeOffer.tsx';
 import OfferImage1 from '../../components/Images/OfferVin.png';
@@ -12,6 +13,14 @@ import Calender from '../../components/Images/Calender.png';
 import Toyota from '../../components/Images/Toyota.png';
 
 const HomePage = () => {
+    const location = useLocation();
+
+    if (location.pathname === "/") {
+        document.body.className = "frontpage";
+    } else {
+        document.body.className = ""; 
+    }
+    
     return (
         <div id="page">
             <HomeHeader />
