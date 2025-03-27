@@ -24,7 +24,20 @@ module.exports.setApp = function (app) {
         if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({ error: "All fields are required" });
         }
-    
+
+        
+        // ✅ Add this block for password complexity
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                error:
+                    "Password must be at least 8 characters long and include one lowercase letter, one uppercase letter, one number, and one special character."
+            });
+        } 
+        
+
+
         try {
             // Check if the user already exists
             let existingUser = await User.findOne({ email });
@@ -278,6 +291,47 @@ module.exports.setApp = function (app) {
             
         }
     });
+
+    /**
+ * ✍️ Manually Update Total Mileage and Recalculate Rate of Change
+ */
+app.put("/api/cars/:carId/update-mileage", async (req, res) => {
+    const { totalMileage } = req.body;
+
+    if (typeof totalMileage !== 'number' || totalMileage < 0) {
+        return res.status(400).json({ error: "Invalid totalMileage value" });
+    }
+
+    try {
+        const car = await Car.findById(req.params.carId);
+        if (!car) return res.status(404).json({ error: "Car not found" });
+
+        const now = new Date();
+        const minutesElapsed = (now - new Date(car.addedAt)) / (1000 * 60);
+        const weeksElapsed = minutesElapsed / 10080;
+
+        // Prevent division by zero
+        const newRateOfChange = weeksElapsed > 0
+            ? (totalMileage - car.startingMileage) / weeksElapsed
+            : 0;
+
+        car.totalMileage = totalMileage;
+        car.rateOfChange = newRateOfChange;
+
+        await car.save();
+
+        res.json({
+            success: true,
+            message: "Mileage and rate of change updated",
+            car,
+        });
+
+    } catch (error) {
+        console.error("Error updating mileage:", error);
+        res.status(500).json({ error: "Server error", details: error.message });
+    }
+});
+
         
     module.exports = router;
 
