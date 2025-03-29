@@ -10,7 +10,8 @@ const CarSchema = new mongoose.Schema({
     startingMileage: { type: Number, required: true },
     totalMileage: { type: Number, required: true },
     rateOfChange: { type: Number, default: 0 }, // Miles per week
-    addedAt: { type: Date, default: Date.now }  // Timestamp of when the car was added
+    addedAt: { type: Date, default: Date.now }, // Timestamp of when the car was added
+    lastMaintenanceNotified: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model("Car", CarSchema);
