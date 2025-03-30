@@ -51,6 +51,7 @@ const CarPage = () =>
     }
 
     //Use this to test without API
+    /*
     function loadTestCars() {
         //setMessage('Test cars loaded');
         const testCars = [
@@ -60,6 +61,7 @@ const CarPage = () =>
         ];
         setCarList(testCars);
     }
+    */
 
     useEffect(() =>{
         //CHANGE TO USE ACTUAL API VVVVVVV
