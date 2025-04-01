@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
+
 // Import and connect MongoDB
 const connectDB = require("./db.js");
 connectDB();
@@ -22,3 +23,5 @@ require("./mileageUpdater");
 app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}`);
 });
+
+module.exports = app; 
