@@ -6,6 +6,8 @@ const { v4: uuidv4 } = require("uuid"); // For generating unique userId
 const express = require("express");
 const crypto = require("crypto");
 const sendVerificationEmail = require("./sendEmail");
+const sendResetEmail = require("./sendEmailReset");
+
 const router = express.Router();
 
 const Car = require("./models/car.js"); // Import Car model
@@ -85,6 +87,65 @@ module.exports.setApp = function (app) {
             res.status(500).json({ error: "Server error" });
         }
     });
+
+    //API for forgotten passoword
+
+    // 📧 Forgot Password
+  app.post("/api/forgot-password", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email)
+      return res.status(400).json({ error: "Email is required" });
+
+    try {
+      const user = await User.findOne({ email });
+      if (!user) return res.status(400).json({ error: "User not found" });
+
+      const resetToken = crypto.randomBytes(32).toString("hex");
+      user.resetToken = resetToken;
+      user.resetTokenExpires = Date.now() + 3600000;
+      await user.save();
+
+      const resetUrl = `${process.env.FRONTEND_BASE_URL}/reset-password/${resetToken}`;
+      const emailSent = await sendResetEmail(user.email, resetUrl);
+      if (!emailSent) throw new Error("Email failed");
+
+      res.json({ success: true, message: "Reset email sent!" });
+    } catch (error) {
+      console.error("Forgot Password Error:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  // 🔁 Reset Password
+  app.post("/api/reset-password/:token", async (req, res) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword)
+      return res.status(400).json({ error: "New password is required" });
+
+    try {
+      const user = await User.findOne({
+        resetToken: token,
+        resetTokenExpires: { $gt: Date.now() },
+      });
+
+      if (!user)
+        return res.status(400).json({ error: "Invalid or expired token" });
+
+      const hashed = await bcrypt.hash(newPassword, 10);
+      user.password = hashed;
+      user.resetToken = undefined;
+      user.resetTokenExpires = undefined;
+      await user.save();
+
+      res.json({ success: true, message: "Password reset successful!" });
+    } catch (error) {
+      console.error("Reset Password Error:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
 
     //  Add Card (Tied to User)
     app.post("/api/addcard", async (req, res) => {
