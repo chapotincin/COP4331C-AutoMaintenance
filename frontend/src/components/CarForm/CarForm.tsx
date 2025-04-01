@@ -31,7 +31,7 @@ function CarForm()
         {
             console.log("Missing user data!");
             //FOR TESTING ONLY BELOW VVVVVVVVVVVVV
-            //userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
+            userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
         }
         formData.userId = userData.userId;
         const {userId, vin, color, startingMileage, rateOfChange} = formData;
@@ -57,6 +57,7 @@ function CarForm()
             if (res.success) {
                 setMessage('Car Added!');
                 setShowForm(false);
+                window.location.reload();
             } else {
                 //Use to test values set correctly VVVV
                 //setMessage(JSON.stringify(formData));
@@ -80,7 +81,7 @@ function CarForm()
         <div className="text-center mt-3">
             {message && <div className="alert alert-danger">{message}</div>}
             {!showForm && (
-                <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+                <button className="btn btn-primary w-50" onClick={() => setShowForm(true)}>
                     Add Car
                 </button>
             )}
@@ -88,61 +89,61 @@ function CarForm()
             {showForm && (
                 <div className="container mt-3 p-4 border rounded shadow">
                     <form onSubmit={addCar}>
-                        <div className="mb-2">
-                            <label className="form-label">VIN</label>
-                            <input 
-                                type="text" 
-                                id="vin"
-                                className="form-control" 
-                                placeholder="VIN#"
-                                value={formData.vin}
-                                onChange={handleInputChange}
-                            />
+                        <div className="row">
+                            <div className="col-md-6 mb-2">
+                                <label className="form-label">VIN</label>
+                                <input 
+                                    type="text" 
+                                    id="vin"
+                                    className="form-control" 
+                                    placeholder="VIN#"
+                                    value={formData.vin}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <label className="form-label">Color</label>
+                                <input 
+                                    type="text" 
+                                    id="color"
+                                    className="form-control"
+                                    placeholder="Color"
+                                    value={formData.color}
+                                    onChange={handleInputChange} 
+                                />
+                            </div>
                         </div>
-                        <div className="mb-2">
-                            <label className="form-label">Color</label>
-                            <input 
-                                type="text" 
-                                id="color"
-                                className="form-control"
-                                placeholder="Color"
-                                value={formData.color}
-                                onChange={handleInputChange} 
-                            />
+                        <div className="row">
+                            <div className="col-md-6 mb-2">
+                                <label className="form-label">Mileage</label>
+                                <input 
+                                    type="text" 
+                                    id="startingMileage"
+                                    className="form-control"
+                                    placeholder="Mileage"
+                                    value={formData.startingMileage}
+                                    onChange={handleInputChange} 
+                                />
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <label className="form-label">Avg Mileage Per Week</label>
+                                <input 
+                                    type="text" 
+                                    id="rateOfChange"
+                                    className="form-control"
+                                    placeholder="Mileage Per Week" 
+                                    value={formData.rateOfChange}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
                         </div>
-                        <div className="mb-2">
-                            <label className="form-label">Mileage</label>
-                            <input 
-                                type="text" 
-                                id="startingMileage"
-                                className="form-control"
-                                placeholder="Mileage"
-                                value={formData.startingMileage}
-                                onChange={handleInputChange} 
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <label className="form-label">Avg Mileage Per Week</label>
-                            <input 
-                                type="text" 
-                                id="rateOfChange"
-                                className="form-control"
-                                placeholder="Mileage Per Week" 
-                                value={formData.rateOfChange}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="d-grid gap-2">
-                            <button type="submit" className="btn btn-success">
-                                Submit
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                onClick={closeForm}
-                            >
-                                Cancel
-                            </button>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <button type="submit" className="btn btn-success w-100">Submit</button>
+                            </div>
+                            <div className="col-md-6">
+                                <button type="button" className="btn btn-danger w-100" onClick={closeForm}>Cancel</button>
+                            </div>
                         </div>
                     </form>
                 </div>
