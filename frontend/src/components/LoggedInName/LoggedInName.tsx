@@ -10,9 +10,9 @@ function LoggedInName()
     }
     else
     {
-        //console.log("Missing user data!");
+        console.log("Missing user data!");
         //FOR TESTING ONLY BELOW VVVVVVVVVVVVV
-        userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
+        //userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
     }
     var firstName = userData.firstName;
     var lastName = userData.lastName;

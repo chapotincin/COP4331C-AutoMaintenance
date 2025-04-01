@@ -16,9 +16,9 @@ const CarPage = () =>
     }
     else
     {
-        //console.log("Missing user data!");
+        console.log("Missing user data!");
         //FOR TESTING ONLY BELOW VVVVVVVVVVVVV
-        userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
+        //userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
     }
     var userId = userData.userId;
     async function getCars() : Promise<void>
@@ -51,7 +51,7 @@ const CarPage = () =>
     }
 
     //Use this to test without API
-    /* */
+    /* 
     function loadTestCars() {
         //setMessage('Test cars loaded');
         const testCars = [
@@ -61,13 +61,13 @@ const CarPage = () =>
         ];
         setCarList(testCars);
     }
-    /**/
+    */
 
     useEffect(() =>{
         //CHANGE TO USE ACTUAL API VVVVVVV
-        //getCars();
+        getCars();
         //TESTING VVVVVVVVVVVVVVV
-        loadTestCars();   
+        //loadTestCars();   
     }, []);
 
     return(

@@ -31,7 +31,7 @@ function CarForm()
         {
             console.log("Missing user data!");
             //FOR TESTING ONLY BELOW VVVVVVVVVVVVV
-            userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
+            //userData = { success: true, userId: "1234", firstName: "Rick", lastName: "L"};
         }
         formData.userId = userData.userId;
         const {userId, vin, color, startingMileage, rateOfChange} = formData;
