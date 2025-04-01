@@ -87,6 +87,9 @@ function LoginComp() {
                     <label>New User? </label>
                     <a href="/register" className="text-decoration-none"> Create An Account</a>
                 </div>
+                <div className="text-center mt-3">
+                    <a href="/reset-password/:token" className="text-decoration-none"> Forgot Password</a>
+                </div>
             </form>
        </div>
     );

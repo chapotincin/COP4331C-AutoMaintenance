@@ -11,8 +11,11 @@ import MaintainIcon from '../../components/Images/MaintainIcon.png';
 import ReminderPic from '../../components/Images/Reminder.png';
 import Calender from '../../components/Images/Calender.png';
 import Toyota from '../../components/Images/Toyota.png';
+import CarHorn from '../../components/Audio/075714_la-cucaracha-car-hornwav-80095.mp3'
+import { useState } from 'react';
 
 const HomePage = () => {
+    const [clickCount, setClickCount] = useState(0);
     const location = useLocation();
 
     if (location.pathname === "/") {
@@ -21,11 +24,22 @@ const HomePage = () => {
         document.body.className = ""; 
     }
     
+    const handleClick = () => {
+        const newCount = clickCount + 1;
+        setClickCount(newCount);
+
+        if (newCount === 5) {
+            const audio = new Audio(CarHorn);
+            audio.play();
+            setClickCount(0); // Reset counter after playing sound
+        }
+    };
+
     return (
         <div id="page">
             <HomeHeader />
             <div id="top-half">
-                <img src={Toyota} alt="Toyota car" className="toyota-image" />
+                <img src={Toyota} alt="Toyota car" onClick={handleClick} className="toyota-image" />
                 <div className="text-content">
                     <h2>Your Car's Health Simplified</h2>
                     <p id="company-description">
