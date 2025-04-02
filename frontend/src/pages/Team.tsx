@@ -5,7 +5,7 @@ import fabian from '../components/Images/fabian.jpg';
 import james from '../components/Images/james.png';
 import shaun from '../components/Images/shaun.jpg';
 import diego from '../components/Images/diego.jpg';
-import defaultprofile from '../components/Images/default-profile.png';
+import jayden from '../components/Images/jayden.png';
 import freddy from '../components/Images/freddy.jpg';
 
 const TeamPage = () => {
@@ -30,7 +30,7 @@ const TeamPage = () => {
                         <PictureFrame imageSrc={shaun} text="Shaun: Database" />
                     </div>
                     <div className="col-md-4 col-sm-6 d-flex justify-content-center mb-4">
-                        <PictureFrame imageSrc={defaultprofile} text="Jayden: Frontend" />
+                        <PictureFrame imageSrc={jayden} text="Jayden: Frontend" />
                     </div>
                 </div>
             </div>
