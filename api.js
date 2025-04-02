@@ -191,6 +191,9 @@ module.exports.setApp = function (app) {
     }
     );
         
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     //  Add Card (Tied to User)
     app.post("/api/addcard", async (req, res) => {
