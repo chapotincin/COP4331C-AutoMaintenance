@@ -86,6 +86,112 @@ module.exports.setApp = function (app) {
         }
     });
 
+<<<<<<< Updated upstream
+=======
+    //API for forgotten passoword
+
+    // 📧 Forgot Password
+  app.post("/api/forgot-password", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email)
+      return res.status(400).json({ error: "Email is required" });
+
+    try {
+      const user = await User.findOne({ email });
+      if (!user) return res.status(400).json({ error: "User not found" });
+
+      const resetToken = crypto.randomBytes(32).toString("hex");
+      user.resetToken = resetToken;
+      user.resetTokenExpires = Date.now() + 3600000;
+      await user.save();
+
+      const resetUrl = `${process.env.FRONTEND_BASE_URL}/reset-password/${resetToken}`;
+      const emailSent = await sendResetEmail(user.email, resetUrl);
+      if (!emailSent) throw new Error("Email failed");
+
+      res.json({ success: true, message: "Reset email sent!" });
+    } catch (error) {
+      console.error("Forgot Password Error:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  // 🔁 Reset Password
+  app.post("/api/reset-password/:token", async (req, res) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword)
+      return res.status(400).json({ error: "New password is required" });
+
+    try {
+      const user = await User.findOne({
+        resetToken: token,
+        resetTokenExpires: { $gt: Date.now() },
+      });
+
+      if (!user)
+        return res.status(400).json({ error: "Invalid or expired token" });
+
+      const hashed = await bcrypt.hash(newPassword, 10);
+      user.password = hashed;
+      user.resetToken = undefined;
+      user.resetTokenExpires = undefined;
+      await user.save();
+
+      res.json({ success: true, message: "Password reset successful!" });
+    } catch (error) {
+      console.error("Reset Password Error:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+    app.post("/api/change-password", async (req, res) => {
+        const { userId, currentPassword, newPassword, confirmNewPassword } = req.body;
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        if (!userId || !currentPassword || !newPassword || !confirmNewPassword) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+        if (newPassword === currentPassword) {
+            return res.status(400).json({ error: "New password must be different from old password" });
+        }
+        
+        if (!passwordRegex.test(newPassword)) {
+            return res.status(400).json({
+                error:
+                    "New password must be at least 8 characters long and include one lowercase letter, one uppercase letter, one number, and one special character."
+            });
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            return res.status(400).json({ error: "New passwords do not match." });
+        }
+
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
+            }
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ error: "Current password is incorrect" });
+            }
+            const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+            user.password = hashedNewPassword;
+            await user.save(); // Save the user to ensure any changes are persisted
+            
+            res.json({ success: true, message: "Password changed successfully!" });
+        } catch (error) {
+            console.error("Error changing password:", error);
+            res.status(500).json({ error: "Server error", details: error.message });
+        }
+    }
+    );
+        
+>>>>>>> Stashed changes
     //  Add Card (Tied to User)
     app.post("/api/addcard", async (req, res) => {
         const { userId, card } = req.body;
