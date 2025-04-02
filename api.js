@@ -86,8 +86,7 @@ module.exports.setApp = function (app) {
         }
     });
 
-<<<<<<< Updated upstream
-=======
+
     //API for forgotten passoword
 
     // 📧 Forgot Password
@@ -191,10 +190,7 @@ module.exports.setApp = function (app) {
     }
     );
         
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
     //  Add Card (Tied to User)
     app.post("/api/addcard", async (req, res) => {
         const { userId, card } = req.body;
