@@ -14,6 +14,49 @@ function LoginComp() {
         setLoginPassword(e.target.value);
     };
 
+    async function forgotPassword(e:any): Promise <void> 
+    {
+        if(!loginEmail)
+        {
+            setMessage("Please Enter Your Email.");
+        }
+        else
+        {
+            const obj = {email: loginEmail};
+            const js = JSON.stringify(obj);
+            e.preventDefault();    
+
+            try
+            {
+                const response = await fetch('http://159.203.135.123:5000/api/forgot-password', {
+                    method: 'POST',
+                    body: js,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if(!response.ok)
+                {
+                    setMessage('Server error. Please try again.');
+                }
+
+                const res = await response.json();
+
+                if(res.success)
+                {
+                    setMessage('Please Check Your Email.');
+                }
+                else
+                {
+                    setMessage('Error sending Email')
+                }
+            }
+            catch (error)
+            {
+                setMessage('Error, Please Try Again.');
+            }
+        }
+    }
+
     async function doLogin(event: React.FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
         const obj = { email: loginEmail, password: loginPassword };
@@ -88,7 +131,7 @@ function LoginComp() {
                     <a href="/register" className="text-decoration-none"> Create An Account</a>
                 </div>
                 <div className="text-center mt-3">
-                    <a href="/reset-password/:token" className="text-decoration-none"> Forgot Password</a>
+                    <a onClick={forgotPassword} className="text-decoration-none"> Forgot Password</a>
                 </div>
             </form>
        </div>
