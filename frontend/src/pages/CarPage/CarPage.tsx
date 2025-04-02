@@ -90,7 +90,7 @@ const CarPage = () =>
                                 carMake={car.make}
                                 carModel={car.model}
                                 carYear={car.year}
-                                carMileage={car.startingMileage}
+                                carMileage={car.totalMileage}
                                 rateOfChange={car.rateOfChange}
                             />
                         ))}
